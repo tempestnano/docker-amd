@@ -1,0 +1,49 @@
+FROM alpine AS builder
+
+# Download QEMU, see https://github.com/docker/hub-feedback/issues/1261
+ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-aarch64.tar.gz
+RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
+
+FROM arm64v8/alpine:latest
+
+# Add QEMU
+COPY --from=builder qemu-aarch64-static /usr/bin
+
+ENV TITLE="Automated Music Downloader (AMD)"
+ENV TITLESHORT="AMD"
+ENV VERSION="1.1.3"
+ENV MBRAINZMIRROR="https://musicbrainz.org"
+ENV XDG_CONFIG_HOME="/config/deemix/xdg"
+ENV DOWNLOADMODE="wanted"
+
+RUN apk add --no-cache \
+    bash \
+    ca-certificates \
+    curl \
+    ip6tables \
+    iptables \
+    jq \
+	mp3val \
+	flac \
+	eyed3 \
+    opus-tools \
+	python3 \
+    ffmpeg && \
+
+    echo "************ install python packages ************" && \
+	python3 -m pip install --no-cache-dir -U \
+		yq \
+		mutagen \
+		r128gain \
+		deemix && \
+	echo "************ setup dl client config directory ************" && \
+	echo "************ make directory ************" && \
+	mkdir -p "${XDG_CONFIG_HOME}/deemix"
+
+    # copy local files
+COPY root/ /
+
+WORKDIR /config
+
+# ports and volumes
+VOLUME /config
