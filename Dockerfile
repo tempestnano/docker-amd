@@ -1,4 +1,17 @@
+FROM alpine:latest AS python
+
+RUN apk add build-base python3 python3-dev py3-pip && \
+    echo "************ install python packages ************" && \
+	pip install wheel && \
+	pip wheel --wheel-dir=/root/wheels \
+		yq \
+		mutagen \
+		r128gain \
+		deemix 
+
 FROM alpine:latest
+
+COPY --from=python /root/wheels /root/wheels
 
 ENV TITLE="Automated Music Downloader (AMD)"
 ENV TITLESHORT="AMD"
@@ -11,18 +24,17 @@ RUN apk add --no-cache \
     bash \
     ca-certificates \
     curl \
-    ip6tables \
-    iptables \
     jq \
-	mp3val \
 	flac \
 	eyed3 \
     opus-tools \
 	python3 \
+	py3-pip \
     ffmpeg && \
-
     echo "************ install python packages ************" && \
-	python3 -m pip install --no-cache-dir -U \
+	pip install \
+      --no-index \
+      --find-links=/root/wheels \
 		yq \
 		mutagen \
 		r128gain \
