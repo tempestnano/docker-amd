@@ -1,7 +1,7 @@
-FROM alpine:latest AS python
+FROM ghcr.io/linuxserver/baseimage-alpine:3.12 AS python
 
 RUN apk add build-base python3 python3-dev py3-pip && \
-    echo "************ install python packages ************" && \
+    echo "*********** install python packages ***********" && \
 	pip install wheel && \
 	pip wheel --wheel-dir=/root/wheels \
 		yq \
@@ -9,13 +9,13 @@ RUN apk add build-base python3 python3-dev py3-pip && \
 		r128gain \
 		deemix 
 
-FROM alpine:latest
+FROM ghcr.io/linuxserver/baseimage-alpine:3.12
 
 COPY --from=python /root/wheels /root/wheels
 
 ENV TITLE="Automated Music Downloader (AMD)"
 ENV TITLESHORT="AMD"
-ENV VERSION="1.1.3"
+ENV VERSION="1.1.4"
 ENV MBRAINZMIRROR="https://musicbrainz.org"
 ENV XDG_CONFIG_HOME="/config/deemix/xdg"
 ENV DOWNLOADMODE="wanted"
