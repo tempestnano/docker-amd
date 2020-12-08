@@ -5,11 +5,11 @@
 [![Docker Hub](https://img.shields.io/badge/Open%20On-DockerHub-blue?style=flat-square)](https://hub.docker.com/r/tempestnano/amd)
 [![Discord](https://img.shields.io/discord/747100476775858276.svg?style=flat-square&label=Discord&logo=discord)](https://discord.gg/JumQXDc "realtime support / chat with the community." )
 
-[tempestnano/amd](https://github.com/tempestnano/docker-amd) is a Lidarr companion script to automatically download music for Lidarr 
+[jstrader/docker-amd](https://github.com/tempestnano/docker-amd) is a Lidarr companion script to automatically download music for Lidarr 
 
 [![tempestnano/amd](https://raw.githubusercontent.com/tempestnano/unraid-templates/master/tempestnano/img/amd.png)](https://github.com/tempestnano/docker-amd)
 
-### Audio ([AMD](https://github.com/tempestnano/docker-amd)) + Video ([AMVD](https://github.com/tempestnano/docker-amvd)) (Plex Example)
+### Audio ([AMD](https://github.com/tempestnano/docker-amd)) (Plex Example)
 ![](https://raw.githubusercontent.com/tempestnano/Scripts/master/images/plex-musicvideos.png)
 
 ## Features
@@ -115,7 +115,7 @@ docker create \
   -e ALBUM_TYPE_FILTER=COMPILE \
   -e POSTPROCESSTHREADS=1 \
   --restart unless-stopped \
-  tempestnano/amd 
+  jstrader/docker-amd 
 ```
 
 
@@ -127,7 +127,7 @@ Compatible with docker-compose v2 schemas.
 version: "2.1"
 services:
   amd:
-    image: tempestnano/amd 
+    image: jstrader/docker-amd
     container_name: amd
     volumes:
       - /path/to/config/files:/config
@@ -168,11 +168,11 @@ services:
 
 # Script Information
 * Script will automatically run when enabled, if disabled, you will need to manually execute with the following command:
-  * From Host CLI: `docker exec -it amd /bin/bash -c 'bash /config/scripts/download.bash'`
-  * From Docker CLI: `bash /config/scripts/download.bash`
+  * From Host CLI: `docker exec -it amd /bin/bash -c 'bash /scripts/download.bash'`
+  * From Docker CLI: `bash /scripts/download.bash`
   
 ## Directories:
-* <strong>/config/scripts</strong>
+* <strong>/scripts</strong>
   * Contains the scripts that are run
 * <strong>/config/logs</strong>
   * Contains the log output from the script
@@ -210,6 +210,7 @@ services:
 
 
 # Credits
+- [Original source for this fork by RandomNinjaAtk](https://github.com/RandomNinjaAtk)
 - [Original Idea based on lidarr-download-automation by Migz93](https://github.com/Migz93/lidarr-download-automation)
 - [Deemix download client](https://deemix.app/)
 - [Musicbrainz](https://musicbrainz.org/)
