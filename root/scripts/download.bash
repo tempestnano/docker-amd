@@ -2,7 +2,7 @@
 export XDG_CONFIG_HOME="/config/deemix/xdg"
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
-agent="automated-music-downloader ( https://github.com/RandomNinjaAtk/docker-amd )"
+agent="automated-music-downloader ( https://github.com/tempestnano/docker-amd )"
 
 Configuration () {
 	processstartid="$(ps -A -o pid,cmd|grep "start.bash" | grep -v grep | head -n 1 | awk '{print $1}')"
