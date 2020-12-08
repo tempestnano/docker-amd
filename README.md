@@ -27,6 +27,8 @@ The architectures supported by this image are:
 | Architecture | Tag |
 | :----: | --- |
 | x86-64 | latest |
+| arm32v7 | latest |
+| arm64v8 | latest |
 
 ## Version Tags
 
