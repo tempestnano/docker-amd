@@ -1,12 +1,4 @@
-FROM --platform=$BUILDPLATFORM golang:alpine AS build
-ARG TARGETPLATFORM
-ARG BUILDPLATFORM
-RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM" > /log
-FROM alpine
-COPY --from=build /log /log
-
-
-FROM ghcr.io/linuxserver/baseimage-alpine:latest AS python
+FROM ghcr.io/linuxserver/baseimage-alpine:3.12 AS python
 
 RUN apk add build-base python3 python3-dev py3-pip && \
     echo "*********** install python packages ***********" && \
@@ -17,7 +9,7 @@ RUN apk add build-base python3 python3-dev py3-pip && \
 		r128gain \
 		deemix 
 
-FROM ghcr.io/linuxserver/baseimage-alpine:latest
+FROM ghcr.io/linuxserver/baseimage-alpine:3.12
 
 COPY --from=python /root/wheels /root/wheels
 
